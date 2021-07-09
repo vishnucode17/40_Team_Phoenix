@@ -31,3 +31,23 @@ def add_product(request):
         new_product.save()
         return HttpResponse("Product added successfully!")
     return render(request,'add_product.html',{username:request.user.username,email:request.user.email})
+def results(request):
+    return render(request,'product_view.html')
+def search(request):
+    product=request.POST.get['product']
+    result=Product.objects.all().filter(product_name__icontains=product)
+    result_len=len(result)
+    search_string_length=len(result)>0
+    product_details_search=[]
+    if search_string_length:
+        for i in range(len(result)):
+            MRP=int(result[i].mrp.replace(',',''))
+            result_price=int(result[i].price.replace(',',''))
+            discount=100-round((result_price/MRP)*100)
+            product_details_search.append((result[i].product_img.url,result[i],result[i].price,MRP,discount))
+    pars={'result':result,
+        'product_details_search':product_details_search, 
+        'search_string_length':search_string_length,
+        'result_len':result_len,
+        'product':product,}
+    return render(request,'product_view.html',pars)
