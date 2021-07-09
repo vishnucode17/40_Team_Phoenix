@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+{% block title %}Login | GroKart{% endblock %}
+{% block content %}
+<div class="login_box">
+    <div class="login-form">
+        <img src="https://image.freepik.com/free-vector/mobile-login-concept-illustration_114360-135.jpg" alt="">
+        <form action="POST" class="login_form">
+            <h2>Customer Login</h2>
+            <div class="loginUsername">
+                <input type="text" placeholder="Username" name="username">
+            </div>
+            <div class="loginPassword">
+                <input type="password" placeholder="Password" name="password">
+            </div>
+            <div class="loginbutton">
+                <button class="btn btn-success">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

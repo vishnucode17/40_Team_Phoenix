@@ -1,3 +1,28 @@
-body{
-    background:red;
+.navbar-brand img{
+    width: 60px;
+    border-radius:100%;
+}
+.login_form{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap: 20px;
+    background:white;
+    border-top-right-radius:20px;
+    border-bottom-right-radius:20px;
+}
+.login-form{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 2px 2px 2px 2px grey;
+}
+.login-form img{
+    width:100%;
+    border-top-left-radius:20px;
+    border-bottom-left-radius:20px;
+}
+.login_box{
+    padding: 20px 100px;
+    background: linear-gradient(rgb(17, 0, 44),rgba(82, 15, 163));
 }
