@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+{% block title %}Login | GroKart{% endblock %}
+{% block content %}
+<div class="login_box">
+    <div class="login-form">
+        <img src="https://image.freepik.com/free-vector/subscriber-concept-illustration_114360-3453.jpg" alt="">
+        <form method="POST" class="login_form">
+            {%csrf_token %}
+            <h2>Customer Sign Up</h2>
+            {% for i in messages %}
+            {{i}}
+            {% endfor %}
+            <div class="login Username">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Username" name="username">
+            </div>
+            <div class="login firstname">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="First Name" name="firstName">
+            </div>
+            <div class="login lastname">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Last Name" name="lastName">
+            </div>
+            <div class="login email">
+                <i class="fas fa-envelope"></i>
+                <input type="email" placeholder="Email Address" name="email">
+            </div>
+            <div class="login Password">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Password" name="password">
+            </div>
+            <div class="login Password">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Confirm Password" name="vpassword">
+            </div>
+            <div class="loginbutton">
+                <button class="btn btn-success">Login</button>
+                <br>
+                <br>
+                <a href="{% url 'login' %}">Have an account?</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

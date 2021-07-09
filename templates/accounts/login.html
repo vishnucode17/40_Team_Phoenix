@@ -4,16 +4,25 @@
 <div class="login_box">
     <div class="login-form">
         <img src="https://image.freepik.com/free-vector/mobile-login-concept-illustration_114360-135.jpg" alt="">
-        <form action="POST" class="login_form">
+        <form method="POST" class="login_form">
+            {% csrf_token %}
             <h2>Customer Login</h2>
+            {% for i in messages %}
+            <p>{{i}}</p>
+            {% endfor %}
             <div class="loginUsername">
+                <i class="fas fa-user"></i>
                 <input type="text" placeholder="Username" name="username">
             </div>
             <div class="loginPassword">
+                <i class="fas fa-lock"></i>
                 <input type="password" placeholder="Password" name="password">
             </div>
             <div class="loginbutton">
                 <button class="btn btn-success">Login</button>
+                <br>
+                <br>
+                <a href="{% url 'register' %}">Don't have an account</a>
             </div>
         </form>
     </div>
