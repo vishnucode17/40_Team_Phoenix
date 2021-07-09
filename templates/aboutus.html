@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% block title %}About Us{% endblock %}
+{% block content %}
+<h1>About Us</h1>
+<div class="about container">
+    <div class="aboutimage">
+        <img src="https://image.freepik.com/free-vector/teamwork-concept-landing-page_52683-20164.jpg" alt="">
+    </div>
+    <div class="text">
+        <p>Grokart is India’s amazing online food and grocery store. With over a huge variety of  products and over a number of  brands, in our website  you will find everything you are looking for. Right from fresh Fruits and Vegetables, Rice and Dals, Spices and Seasonings to Packaged products, Beverages, Personal care products, Meats – we have it all.
+
+            Choose from a wide range of options in every category, exclusively handpicked to help you find the best quality available at the lowest prices. Select a time slot for delivery and your order will be delivered right to your doorstep, anywhere in India. You can pay online using your debit / credit card or by cash / sodexo on delivery.
+            
+            We guarantee on time delivery, and the best quality! 	</p>
+    </div>
+</div>
+<style>
+    h1{
+        text-align: center;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 3rem;
+        margin:30px;
+        color: white;
+    }
+    .about{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        align-items:center;
+        color: white;
+        gap: 20px;
+    }
+    body{
+        background: linear-gradient(rgb(17, 0, 44),rgba(82, 15, 163));
+    }
+    .about img{
+        width: 100%;
+        border-radius:100%
+    }
+</style>
+{% endblock %}

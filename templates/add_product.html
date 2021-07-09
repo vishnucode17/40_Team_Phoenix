@@ -1,0 +1,96 @@
+{% extends 'index.html' %}
+{% block title %}Add Product{% endblock %}
+{% block content %}
+<h1 id="addtitle">Add Product</h1>
+<div class="seller_form">
+    <div class="add_image">
+        <img src="https://image.freepik.com/free-vector/online-ordering-purchase-making-buying-goods-internet-store-website-female-customer-with-tablet-adding-product-cart-cartoon-character_335657-2561.jpg" alt="add_product_img" id="addProductimg">
+    </div>
+    <div>
+        <form method="POST" action="/addproduct">
+            <div class="mb-3">
+                <label for="storename" class="form-label">Store Name</label>
+                <input type="text" class="form-control" id="storename" name="storename">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    name="email">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <select class="form-select" aria-label="Default select example" name="category">
+                    <option selected disabled="disabled">Product Category</option>
+                    <option value="Fruits and Vegetables">Fruits and Vegetables</option>
+                    <option value="Bakery items and dairy">Bakery items and Dairy</option>
+                    <option value="Snacks and beverages">Snacks and Beverages</option>
+                    <option value="Egg meat and fish">Egg Meat and Fish</option>
+                    <option value="Frozen Food">Frozen Food</option>
+                    <option value="snacks">Snacks</option>
+                    <option value="staples">Staples</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="productName" name="productName">
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Write about product" id="productDescription"
+                    style="height: 100px" name="productDescription"></textarea>
+                <label for="productDescription">Product Description</label>
+            </div>
+            <div class="mb-3">
+                <label for="mrp" class="form-label">MRP</label>
+                <input type="tel" class="form-control" id="mrp" name="mrp">
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="tel" class="form-control" id="price" name="price">
+            </div>
+            <div class="mb-3">
+                <label for="pincodes" class="form-label">Available Pincodes</label>
+                <input type="text" class="form-control" id="pincodes" name="pincodes">
+            </div>
+
+            <button class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(rgb(54, 0, 153), rgb(31, 0, 92)) no-repeat;
+        background-size: 100% 100%;
+        background-position: center;
+    }
+
+    .seller_form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 20px;
+    }
+
+    #addProductimg {
+        width: 100%;
+        border-top-right-radius: 100%;
+        border-bottom-right-radius: 100%;
+    }
+
+    #addtitle {
+        text-align: center;
+        color: white;
+        font-size: 44px;
+        padding:10px;
+        text-shadow: 2px 2px black;
+    }
+
+    label {
+        color: white;
+    }
+    form{
+        margin: 10px;
+    }
+</style>
+{% endblock %}
