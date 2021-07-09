@@ -7,15 +7,16 @@
         <img src="https://image.freepik.com/free-vector/online-ordering-purchase-making-buying-goods-internet-store-website-female-customer-with-tablet-adding-product-cart-cartoon-character_335657-2561.jpg" alt="add_product_img" id="addProductimg">
     </div>
     <div>
-        <form method="POST" action="/addproduct">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="mb-3">
                 <label for="storename" class="form-label">Store Name</label>
-                <input type="text" class="form-control" id="storename" name="storename">
+                <input type="text" class="form-control" id="storename" name="storename" value={{username}}>
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                    name="email">
+                    name="email" value={{email}}>
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div class="mb-3">
@@ -48,9 +49,18 @@
                 <input type="tel" class="form-control" id="price" name="price">
             </div>
             <div class="mb-3">
+                <label for="slug" class="form-label">Slug</label>
+                <input type="text" class="form-control" id="slug" name="slug">
+            </div>
+            <div class="mb-3">
                 <label for="pincodes" class="form-label">Available Pincodes</label>
                 <input type="text" class="form-control" id="pincodes" name="pincodes">
             </div>
+            <div>
+                <label for="img">Upload Product image:</label>
+                <input type="file" id="img" name="product_img" accept="image/*">
+            </div>
+            <br>
 
             <button class="btn btn-primary">Submit</button>
         </form>
