@@ -34,9 +34,12 @@ def add_product(request):
 def results(request):
     return render(request,'product_view.html')
 def search(request):
-    product=request.POST.get['product']
+    product=request.GET['product']
+    print(product)
     result=Product.objects.all().filter(product_name__icontains=product)
     result_len=len(result)
+    if result_len==0:
+        result=Product.objects.all().filter(product_name__icontains=product)
     search_string_length=len(result)>0
     product_details_search=[]
     if search_string_length:
@@ -44,7 +47,8 @@ def search(request):
             MRP=int(result[i].mrp.replace(',',''))
             result_price=int(result[i].price.replace(',',''))
             discount=100-round((result_price/MRP)*100)
-            product_details_search.append((result[i].product_img.url,result[i],result[i].price,MRP,discount))
+            product_details_search.append((result[i].product_image.url,result[i],result[i].price,MRP,discount))
+            print(product_details_search)
     pars={'result':result,
         'product_details_search':product_details_search, 
         'search_string_length':search_string_length,

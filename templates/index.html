@@ -9,7 +9,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>{% block title %} GroKart | Home {% endblock %}</title>
-    <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
@@ -26,8 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item" style="width: 900px;">
-                        <form class="d-flex" method="POST">
-                            {% csrf_token %}
+                        <form class="d-flex" method="get" action="{% url 'results' %}">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="product">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>

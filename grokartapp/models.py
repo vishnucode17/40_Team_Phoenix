@@ -13,3 +13,5 @@ class Product(models.Model):
     product_description=models.CharField(max_length=1024)
     slug = models.SlugField(max_length = 250, null = True, blank = True)
     product_image=models.ImageField(upload_to='product_images')
+    def __str__(self):
+        return self.product_name
