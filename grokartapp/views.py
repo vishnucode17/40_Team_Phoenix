@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import Product
+from .models import Product,OrderItem
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -76,3 +76,6 @@ def product_view(request,slug):
     except:
         print("Not found")
     return render(request,'product_view.html',pars)
+
+def add_to_cart(request,slug):
+    return render(request,'addtocart.html')

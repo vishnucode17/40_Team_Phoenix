@@ -45,3 +45,31 @@
     align-items: center;
     gap: 4px;
 }
+.category{
+    padding:5% 5%;
+    background:white;
+    text-align:center;
+    white-space:nowrap;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    align-items:center;
+    gap: 10%;
+}
+.category img{
+    width:100%;
+}
+.icon{
+    display:inline-block;
+}
+.shopbycategory{
+    text-align:center;
+    margin:10px;
+}
+.shopbycategory a{
+    text-decoration:none;
+    color: black;
+    font-size:18px;
+}
+.carousel-item img{
+    height:300px;
+}
