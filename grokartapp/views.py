@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Product,OrderItem
+from .models import Product,OrderItem,Order
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -78,4 +78,24 @@ def product_view(request,slug):
     return render(request,'product_view.html',pars)
 
 def add_to_cart(request,slug):
-    return render(request,'addtocart.html')
+    item=get_object_or_404(Product, slug=slug)
+    order_item,created = OrderItem.objects.get_or_create(
+        item=item,
+        user=request.user,
+        ordered=False
+    )
+    order_query = Order.objects.filter(user=request.user,ordered=False)
+    if order_query.exists():
+        order=order_query[0]
+        if order.items.filter(item__slug=item.slug).exists():
+            order_item.quantity+=1
+            order_item.save()
+        else:
+            order.items.add(order_item)
+    else:
+        ordered_date=timezone.now()
+        order=Order.objects.create(
+            user=request.user,ordered_date=ordered_date
+        )
+        order.items.add(order_item)
+    return redirect ('core:product_view',slug=slug)
