@@ -10,7 +10,7 @@
 <div class="results-div">
     <div class="product_results">
         {% if search_string_length %}
-        {% for img,item,price,mrp,off in product_details_search %}
+        {% for img,item,price,mrp,off,slug in product_details_search %}
         <div class="card">
             <div class="content">
                 <img src="{{img}}" alt="img" id="product-img">
@@ -20,15 +20,17 @@
                 <p>{{off}} %</p>
                 </div>
                 <p id="price">&#8377 {{price}}</p>
-                <button>Buy Now</button>
+                <a href="/products/{{slug}}"><button>Buy Now</button></a>
             </div>
         </div>
         {% endfor %}
         {% else %}
-        <p style="color:white">No results found</p>
-        {% endif %}
     
     </div>
+    <div class="no-results container">
+        <img src="https://image.freepik.com/free-vector/no-data-concept-illustration_114360-616.jpg" alt="">
+    </div>
+    {% endif %}
 </div>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -106,6 +108,16 @@
     }
     #price{
         font-size:24px;   
+    }
+    .no-results{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        width:100%;
+    }
+    .no-results img{
+        width: 40%;
+        border-radius:100%;
     }
 </style>
 <script type="text/javascript" src="{% static 'js/vanilla-tilt.js' %}"></script>

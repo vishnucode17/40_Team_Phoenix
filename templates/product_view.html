@@ -7,15 +7,27 @@
             <img src="/media/{{product_img}}" alt="{{product_name}} image">
         </div>
         <div class="product_info">
-            <h2>{{product_name}}</h2>
-            <p>{{category}}</p>
-            <p>{{mrp}}</p>
+            <h2 id="product-name">{{product_name}}</h2>
+            <p>MRP <span>{{mrp}}</span></p>
             <p>{{price}}</p>
+            <p>{{category}}</p>
             <p>{{product_desc}}</p>
         </div>
     </div>
 </div>
 <style>
-    product_view-grid {}
+    .product_view-grid {
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top:10px;
+    }
+    .product_view-grid img{
+        width:100%;
+        padding:10px;
+    }
+    #product-name{
+        font-size:38px;
+        font-weight:700;
+    }
 </style>
 {% endblock %}
