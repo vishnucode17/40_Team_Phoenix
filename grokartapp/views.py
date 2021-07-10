@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.http import HttpResponse
 from django.contrib import messages
-from textblob import TextBlob as tb
+from django.conf import settings 
+from django.core.mail import send_mail 
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -155,4 +156,29 @@ def cart(request):
         }
         return render(request,'cart.html',pars)
     
-     
+def order_summary(request):
+    if request.method == 'POST':
+        address_one=request.POST['address_one']
+        address_two=request.POST['address_two']
+        pincode=request.POST['pincode']
+        address_three=request.POST['address_three']
+        address_four=request.POST['address_four']
+        address_five=request.POST['address_five']
+        full_name=request.user.first_name + ' ' + request.user.last_name
+        order_query=OrderItem.objects.filter(user=request.user,ordered=False)
+        for i in order_query:
+            i.ordered = True
+            product_query=Product.objects.filter(product_name=i.item)
+            product_query=product_query[0]
+            seller_mail=User.objects.get(username=product_query.storename)
+            buyer_subject = f'{i.item} Order Placed'
+            buyer_message = f'Hi {request.user.first_name} {request.user.last_name}, Thank you for shopping in GroKart. Order details:\n{i.item}\nprice: {product_query.price}\nquantity:{i.quantity}Have a great day'
+            seller_subject = f'New Order received {i.item}'
+            seller_message = f'Hi {request.user.username}, You got a new order. Order details:\n{i.item}\nprice: {product_query.price}\nHave a great day.Check the website for more details.Have a great day'
+            email_from = settings.EMAIL_HOST_USER 
+            recipient_list = [request.user.email, ] 
+            send_mail( buyer_subject, buyer_message, email_from, recipient_list ) 
+            send_mail(seller_subject,seller_message, email_from, [seller_mail.email])
+            return redirect('home')
+
+    return render(request,'order_summary.html')

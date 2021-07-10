@@ -1,2 +1,67 @@
 {% extends "index.html" %}
-{% block content %}Order Summary{% endblock %}
+{% block title %}Order Summary{% endblock %}
+{% block content %}
+<div class="buyer_form">
+    <h1>Fill the Details</h1>{{buyer_address}}
+    <form action="" class=buyer_form_form enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        <div>
+            <input type="text" placeholder="Full Name" name="name" value="{{user.first_name}} {{user.last_name}}">
+        </div>
+        <div>
+            <input type="text" name="email" id="email" placeholder="Email Address" value="{{user.email}}">
+        </div>
+        <div class='locality'>
+            <input type="text" name="address_one" id="address_one" placeholder="Street Name/Locality"
+                value="{{address_one}}">
+            <input type="text" name="address_two" id="address_two" placeholder="Area" value={{address_two}}>
+            <input type="tel" name='pincode' placeholder="Pincode" id="pincode" value={{pincode}}>
+            <input type="text" name="address_three" id="address_three" placeholder="City" value={{address_three}}>
+            <input type="text" name="address_four" id="address_four" placeholder="State" value={{address_four}}>
+            <input type="text" name="address_five" id="address_five" placeholder="Country" value={{address_five}}>
+        </div>
+        <div>
+            <button>Next</button>
+        </div>
+    </form>
+</div>
+<style>
+    .buyer_form h1 {
+        text-align: center;
+    }
+
+    .buyer_form_form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .buyer_form_form input {
+        border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+        border-left: 1px solid rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        font-size: 18px;
+        margin: 30px;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 10px;
+    }
+
+    .locality {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+    }
+
+    .buyer_form_form button {
+        padding: 5px 10px;
+        font-size: 25px;
+        border-radius: 5px;
+        border: none;
+        background-color: #009c75;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
