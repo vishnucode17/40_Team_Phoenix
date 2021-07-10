@@ -36,7 +36,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'about' %}">About</a>
                     </li>
-                    
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <i class="fas fa-user-circle fa-3x" style="color: #fff"></i>
+                    </li>
+                    {% else %}
+                    {% endif %}
                 </ul>
                 
                 <div>
