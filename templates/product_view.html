@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+{% block title %} {{product_name}} {% endblock %}
+{% block content %}
+<div class="product_view">
+    <div class="product_view-grid">
+        <div class="product_img">
+            <img src="/media/{{product_img}}" alt="{{product_name}} image">
+        </div>
+        <div class="product_info">
+            <h2>{{product_name}}</h2>
+            <p>{{category}}</p>
+            <p>{{mrp}}</p>
+            <p>{{price}}</p>
+            <p>{{product_desc}}</p>
+        </div>
+    </div>
+</div>
+<style>
+    product_view-grid {}
+</style>
+{% endblock %}

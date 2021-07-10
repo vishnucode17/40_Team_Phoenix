@@ -59,3 +59,20 @@ def search(request):
         'result_len':result_len,
         'product':product,}
     return render(request,'search.html',pars)
+
+def product_view(request,slug):
+    try:
+        product = Product.objects.get(slug=slug)
+        pars={
+            'store':product.storename,
+            'product_name':product.product_name,
+            'category':product.category,
+            'first_available':product.date_added,
+            'mrp':product.mrp,
+            'price':product.price,
+            'product_img':product.product_image,
+            'product_desc':product.product_description,
+        }
+    except:
+        print("Not found")
+    return render(request,'product_view.html',pars)
