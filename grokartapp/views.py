@@ -128,26 +128,15 @@ def remove_from_cart(request,slug):
     return redirect("grokart:product_view",slug=slug)
 
 def cart(request):
-    print(request.user)
-    try:
-        result_cart=[]
+        print(request.user)
+    
+        result_cart=()
         order_query=OrderItem.objects.filter(user=request.user,ordered=False)
-        print(order_query)
         cart_item=order_query
         for i in order_query:
-            result_cart.append()
-        product_query=Product.objects.filter(product_name=cart_item.item)
-        product_query=product_query[0]
-        pars={
-            'item':cart_item.item,
-            'quantity':cart_item.quantity,
-            'product_name':product_query.product_name,
-            'img_url':product_query.product_image,
-            'mrp':product_query.mrp,
-            'price':product_query.price,
-            'n':len(order_query)
-        }
-        return render(request,'cart.html',pars)
-    except:
-        print("No items in cart")
-        return redirect('grokart:home')
+            product_query=Product.objects.filter(product_name=i.item)
+            product_query=product_query[0]
+            result_cart+=((i.quantity,product_query.product_name,product_query.product_image,product_query.mrp,product_query.price),)
+        return render(request,'cart.html',{'result_cart':result_cart,'n':len(order_query)})
+    
+     

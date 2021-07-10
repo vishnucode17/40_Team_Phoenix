@@ -1,12 +1,61 @@
 {% extends "index.html" %}
 {% block title %}My Cart {% endblock %}
 {% block content %}
-<div class="mycart_div">
-    My Cart({{n}})
-    <img src="/media/{{img_url}}" alt="">
-    <h3>{{item}}</h3>
-    <p>{{mrp}}</p>
-    <p>{{price}}</p>
-    <p>{{quantity}}</p>
+<h2>My Cart ({{n}})</h2>
+<div class="my_cart-div">
+    <div class="product-details">
+        {% for quantity,item,img,mrp,price in result_cart %}
+        <div class="mycart_card">
+            <img src="/media/{{img}}" alt="">
+            <div class="cart-details">
+                <p id="item">{{item}}</p>
+                <div class="price">
+                    <p id='mrp'>&#8377 {{mrp}}</p>
+                    <p id='price'>&#8377 {{price}}</p>
+                </div>
+                <p id='quantity'>{{quantity}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="price-details">
+
+    </div>
 </div>
+<style>
+    .product-details {
+        display: flex;
+        flex-direction: column;
+    }
+    body {
+        background:linear-gradient(to right,rgb(17, 0, 44),rgb(53, 8, 124));
+        color: white;
+    }
+    .mycart_card {
+        margin: 10px;
+        display: grid;
+        grid-template-columns: 0.3fr 1fr;
+        box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+        border-radius:15px;
+        background:rgba(255,255,255,0.1);
+        overflow: hidden;
+        align-items:center;
+        border-top:  1px solid rgba(255,255,255,0.5);
+        border-left:  1px solid rgba(255,255,255,0.5);
+        backdrop-filter: blur(5px);
+        padding:10px;
+    }
+
+    .mycart_card img {
+        width: 100%;
+        padding:10px;
+    }
+    .my_cart-div{
+        display:grid;
+        grid-template-columns:1fr 0.6fr;
+    }
+    #item{
+        font-size:24px;
+    }
+</style>
 {% endblock %}
