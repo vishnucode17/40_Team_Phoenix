@@ -8,26 +8,106 @@
         </div>
         <div class="product_info">
             <h2 id="product-name">{{product_name}}</h2>
-            <p>MRP <span>{{mrp}}</span></p>
-            <p>{{price}}</p>
-            <p>{{category}}</p>
+            <div class="price_div">
+                <p id="price">&#8377 {{price}}</p>
+                <p id="mrp">&#8377 {{mrp}}</span></p>
+                <p id="off">{{off}} %</p>
+            </div>
+            <p id="sold">Sold by <span><em>{{store}}</em></span></p>
+            <p>Category: <strong>{{category}}</strong></p>
+            <p><strong>Description:</strong></p>
+            <p><strong>{{product_name}}</strong></p>
             <p>{{product_desc}}</p>
+            <div class="buy">
+                <button id="buy">Buy Now</button>
+                <button id="add">Add to cart</button>
+            </div>
+            
         </div>
     </div>
 </div>
 <style>
     .product_view-grid {
-        display:grid;
+        display: grid;
         grid-template-columns: 1fr 1fr;
-        margin-top:10px;
+        margin: 10px;
+        gap: 20px;
     }
-    .product_view-grid img{
-        width:100%;
+
+    .product_view-grid img {
+        width: 100%;
+        padding: 10px;
+        -webkit-filter: drop-shadow(5px 5px 5px #222);
+        filter:drop-shadow(5px 5px 5px #222); 
+    }
+
+    #product-name {
+        font-size: 38px;
+        font-weight: 700;
+    }
+
+    #mrp {
+        font-size: 24px;
+        text-decoration: line-through;
+        font-weight: 600;
+    }
+    .price_div{
+        display:flex;
+        align-items:center;
+        gap: 10px;
+    }
+    #price{
+        font-size: 40px;
+        font-weight:bold;
+    }
+    .product_info{
+        display:flex;
+        flex-direction:column;
+        min-height:90vh
+    }
+    .product_img{
+        border:1px solid rgba(128, 128, 128, 0.445);
+        border-radius:10px;
+    }
+    .product_img img{
+        transition: transform .2s;
+    }
+    .product_img img:hover{
+        transform: scale(1.2);
+    }
+    #off{
+        color: red;
+    }
+    #sold{
+        font-size: 18px;
+    }
+    #sold span{
+        color:rgb(53, 53, 167);
+        font-size:22px;
+        font-weight:bold;
+    }
+    .buy{
+        display:flex;
+        justify-content:space-around;
+    }
+    .buy button{
+        width: 100%;
+    }
+    #buy,#add{
+        outline:none;
+        border:none;
+        font-size:18px;
         padding:10px;
     }
-    #product-name{
-        font-size:38px;
-        font-weight:700;
+    #buy{
+        background:rgb(33, 126, 155);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    #add{
+        background:rgb(218, 150, 25);
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
     }
 </style>
 {% endblock %}

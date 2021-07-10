@@ -59,6 +59,9 @@ def search(request):
 def product_view(request,slug):
     try:
         product = Product.objects.get(slug=slug)
+        MRP=int(product.mrp.replace(',',''))
+        result_price=int(product.price.replace(',',''))
+        discount=100-round((result_price/MRP)*100)
         pars={
             'store':product.storename,
             'product_name':product.product_name,
@@ -68,6 +71,7 @@ def product_view(request,slug):
             'price':product.price,
             'product_img':product.product_image,
             'product_desc':product.product_description,
+            'off':discount
         }
     except:
         print("Not found")
