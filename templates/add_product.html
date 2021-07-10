@@ -10,24 +10,16 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="storename" class="form-label">Store Name</label>
-                <input type="text" class="form-control" id="storename" name="storename" value={{username}}>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                    name="email" value={{email}}>
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
                 <select class="form-select" aria-label="Default select example" name="category">
                     <option selected disabled="disabled">Product Category</option>
-                    <option value="Fruits and Vegetables">Fruits and Vegetables</option>
-                    <option value="Bakery items and dairy">Bakery items and Dairy</option>
-                    <option value="Snacks and beverages">Snacks and Beverages</option>
+                    <option value="Fruits and Vegetables">Fruits</option>
+                    <option value="Fruits and Vegetables">Vegetables</option>
+                    <option value="Bakery items and dairy">Bakery/Bread</option>
+                    <option value="Bakery items and dairy">Dairy</option>
+                    <option value="Snacks and beverages">Snacks</option>
+                    <option value="Snacks and beverages">Beverages</option>
                     <option value="Egg meat and fish">Egg Meat and Fish</option>
                     <option value="Frozen Food">Frozen Food</option>
-                    <option value="snacks">Snacks</option>
                     <option value="staples">Staples</option>
                 </select>
             </div>
@@ -50,7 +42,7 @@
             </div>
             <div class="mb-3">
                 <label for="slug" class="form-label">Slug</label>
-                <input type="text" class="form-control" id="slug" name="slug">
+                <input type="text" class="form-control" id="slug" name="slug" disabled="disabled">
             </div>
             <div class="mb-3">
                 <label for="pincodes" class="form-label">Available Pincodes</label>
@@ -103,4 +95,17 @@
         margin: 10px;
     }
 </style>
+<script>
+    const product_title=document.getElementById("productName");
+    const sluginput=document.getElementById("slug");
+    const slugify =(val)=>{
+        return val.toString().toLowerCase().trim()
+        .replace(/&/g,'-and-')
+        .replace(/[\s\W-]+/g,'-')
+    }
+
+    product_title.addEventListener('keyup',(e)=>{
+        sluginput.setAttribute("value",slugify(product_title.value))
+    })
+</script>
 {% endblock %}

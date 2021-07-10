@@ -11,7 +11,7 @@ class Product(models.Model):
     mrp=models.CharField(max_length=255)
     price=models.CharField(max_length=255)
     product_description=models.CharField(max_length=1024)
-    slug = models.SlugField(max_length = 250, null = True, blank = True)
+    slug = models.SlugField(max_length = 250, null = True, blank = True,unique = True)
     product_image=models.ImageField(upload_to='product_images')
     def __str__(self):
         return self.product_name

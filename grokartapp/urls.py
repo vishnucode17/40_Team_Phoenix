@@ -7,6 +7,7 @@ urlpatterns=[
     path('about',views.about,name='about'),
     path('add_product',views.add_product,name='add_product'),
     path('search/',views.search,name='search'),
+
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

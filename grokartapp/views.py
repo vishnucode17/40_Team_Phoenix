@@ -5,6 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.http import HttpResponse
+from textblob import TextBlob as tb
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -35,11 +36,15 @@ def add_product(request):
 def search(request):
     print('abcd')
     product=request.GET['product']
-    print(len(product))
+    corrected_name=tb(product)
+    print(corrected_name)
+    product=corrected_name.correct()
+    print(product)
     result=Product.objects.all().filter(product_name__icontains=product)
     result_len=len(result)
     if result_len==0:
-        result=Product.objects.all().filter(product_name__icontains=product)
+        result=Product.objects.all().filter(category__icontains=product)
+    result_len=len(result)
     search_string_length=len(result)>0
     product_details_search=[]
     if search_string_length:
@@ -48,7 +53,6 @@ def search(request):
             result_price=int(result[i].price.replace(',',''))
             discount=100-round((result_price/MRP)*100)
             product_details_search.append((result[i].product_image.url,result[i],result[i].price,MRP,discount))
-            print(product_details_search)
     pars={'result':result,
         'product_details_search':product_details_search, 
         'search_string_length':search_string_length,
