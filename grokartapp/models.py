@@ -36,7 +36,7 @@ class OrderItem(models.Model):
     def total_price(self):
         return self.quantity*int(self.item.price)
     def total_discount(self):
-        return self.quantity * (self.item.mrp - self.item.price)
+        return self.quantity * (int(self.item.mrp) - int(self.item.price))
     def total_amount_save(self):
         return self.total_price()-self.total_discount()
 

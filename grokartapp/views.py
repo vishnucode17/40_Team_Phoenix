@@ -102,8 +102,9 @@ def add_to_cart(request,slug):
         )
         order.items.add(order_item)
         messages.info(request,"Added Successfully to the cart")
-    return redirect ('grokartapp:product_view',slug=slug)
+    return redirect ('/mycart',slug=slug)
 def remove_from_cart(request,slug):
+    
     item=get_object_or_404(Product, slug=slug)
     order_query=Order.objects.filter(
         user=request.user,
@@ -121,22 +122,37 @@ def remove_from_cart(request,slug):
             messages.info(request,"Item Removed from the cart")
         else:
             messages.info(request,"Item is not in the cart")
-            return redirect("grokart:product_view",slug=slug)
+            return redirect("/mycart",slug=slug)
     else:
         messages.info(request,"You don't have an active order")
-        return redirect("grokart:product_view",slug=slug)
-    return redirect("grokart:product_view",slug=slug)
+        return redirect("/mycart",slug=slug)
+    return redirect("/mycart",slug=slug)
 
 def cart(request):
+        total_cart_price=0
+        total_cart_discount=0
+        total_cart_amount_save=0
+        total_mrp=0
         print(request.user)
-    
         result_cart=()
         order_query=OrderItem.objects.filter(user=request.user,ordered=False)
         cart_item=order_query
         for i in order_query:
             product_query=Product.objects.filter(product_name=i.item)
             product_query=product_query[0]
-            result_cart+=((i.quantity,product_query.product_name,product_query.product_image,product_query.mrp,product_query.price),)
-        return render(request,'cart.html',{'result_cart':result_cart,'n':len(order_query)})
+            result_cart+=((i.quantity,product_query.product_name,product_query.product_image,product_query.mrp,product_query.price,product_query.slug),)
+            total_cart_price+=int(i.total_price())
+            total_cart_discount+=int(i.total_discount())
+            total_cart_amount_save+=int(i.total_amount_save())
+            total_mrp+=int(product_query.mrp)*i.quantity
+        print(total_cart_price)
+        pars={'result_cart':result_cart,
+        'n':len(order_query),
+        'total_price':total_cart_price,
+        'total_discount':total_cart_discount,
+        'total_amount_save':total_cart_amount_save,
+        'total_mrp':total_mrp
+        }
+        return render(request,'cart.html',pars)
     
      
