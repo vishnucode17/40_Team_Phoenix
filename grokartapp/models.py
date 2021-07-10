@@ -19,10 +19,13 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
     def get_add_to_cart_url(self):
-        return reverse('core:add-to-cart',kwargs={
+        return reverse('grokartapp:add-to-cart',kwargs={
             'slug':self.slug
         })
-
+    def get_remove_from_cart_url(self):
+        return reverse('grokartapp:remove-from-cart',kwargs={
+            'slug':self.slug
+        })
 class OrderItem(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)

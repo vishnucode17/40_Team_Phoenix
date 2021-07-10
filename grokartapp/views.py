@@ -5,6 +5,7 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.http import HttpResponse
+from django.contrib import messages
 from textblob import TextBlob as tb
 # Create your views here.
 def home(request):
@@ -71,7 +72,8 @@ def product_view(request,slug):
             'price':product.price,
             'product_img':product.product_image,
             'product_desc':product.product_description,
-            'off':discount
+            'off':discount,
+            'slug':product.slug,
         }
     except:
         print("Not found")
@@ -90,6 +92,7 @@ def add_to_cart(request,slug):
         if order.items.filter(item__slug=item.slug).exists():
             order_item.quantity+=1
             order_item.save()
+            messages.info(request,"Item Quantity Updated")
         else:
             order.items.add(order_item)
     else:
@@ -98,4 +101,53 @@ def add_to_cart(request,slug):
             user=request.user,ordered_date=ordered_date
         )
         order.items.add(order_item)
-    return redirect ('core:product_view',slug=slug)
+        messages.info(request,"Added Successfully to the cart")
+    return redirect ('grokartapp:product_view',slug=slug)
+def remove_from_cart(request,slug):
+    item=get_object_or_404(Product, slug=slug)
+    order_query=Order.objects.filter(
+        user=request.user,
+        ordered=False
+    )
+    if order_query.exists():
+        order=order_query[0]
+        if order.items.filter(item__slug=slug).exists():
+            order_item=OrderItem.objects.filter(
+                item=item,
+                user=request.user,
+                ordered=False
+            )[0]
+            order.items.remove(order_item)
+            messages.info(request,"Item Removed from the cart")
+        else:
+            messages.info(request,"Item is not in the cart")
+            return redirect("grokart:product_view",slug=slug)
+    else:
+        messages.info(request,"You don't have an active order")
+        return redirect("grokart:product_view",slug=slug)
+    return redirect("grokart:product_view",slug=slug)
+
+def cart(request):
+    print(request.user)
+    try:
+        result_cart=[]
+        order_query=OrderItem.objects.filter(user=request.user,ordered=False)
+        print(order_query)
+        cart_item=order_query
+        for i in order_query:
+            result_cart.append()
+        product_query=Product.objects.filter(product_name=cart_item.item)
+        product_query=product_query[0]
+        pars={
+            'item':cart_item.item,
+            'quantity':cart_item.quantity,
+            'product_name':product_query.product_name,
+            'img_url':product_query.product_image,
+            'mrp':product_query.mrp,
+            'price':product_query.price,
+            'n':len(order_query)
+        }
+        return render(request,'cart.html',pars)
+    except:
+        print("No items in cart")
+        return redirect('grokart:home')

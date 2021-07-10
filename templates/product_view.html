@@ -2,6 +2,14 @@
 {% block title %} {{product_name}} {% endblock %}
 {% block content %}
 <div class="product_view">
+    {% for message in messages %}
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+        <div>
+          {{message}}
+        </div>
+      </div>
+      {% endfor %}
     <div class="product_view-grid">
         <div class="product_img">
             <img src="/media/{{product_img}}" alt="{{product_name}} image">
@@ -19,8 +27,8 @@
             <p><strong>{{product_name}}</strong></p>
             <p>{{product_desc}}</p>
             <div class="buy">
-                <button id="buy">Buy Now</button>
-                <button id="add">Add to cart</button>
+                <a href="/remove-from-cart/{{slug}}"><button id="buy">Buy Now</button></a>
+                <a href="/cart/{{slug}}"><button id="add">Add to cart</button></a>
             </div>
             
         </div>

@@ -26,14 +26,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item" style="width: 900px;">
-                        <form class="d-flex" method="get" action="{% url 'search' %}">
+                        <form class="d-flex" method="get" action="{% url 'grokartapp:search' %}">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="product">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                        <a class="nav-link" href="{% url 'grokartapp:about' %}">About</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
@@ -46,9 +46,9 @@
                 
                 <div>
                     {% if user.is_authenticated %}
-                    <a href="{% url 'logout' %}"><button class="btn btn-primary">Logout</button></a>
+                    <a href="{% url 'accounts:logout' %}"><button class="btn btn-primary">Logout</button></a>
                     {% else %}
-                    <a href="{% url 'login' %}"><button class="btn btn-primary">Login</button></a>
+                    <a href="{% url 'accounts:login' %}"><button class="btn btn-primary">Login</button></a>
                     {% endif %}
                 </div>
             </div>

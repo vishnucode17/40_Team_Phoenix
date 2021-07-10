@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+{% block title %}My Cart {% endblock %}
+{% block content %}
+<div class="mycart_div">
+    My Cart({{n}})
+    <img src="/media/{{img_url}}" alt="">
+    <h3>{{item}}</h3>
+    <p>{{mrp}}</p>
+    <p>{{price}}</p>
+    <p>{{quantity}}</p>
+</div>
+{% endblock %}
