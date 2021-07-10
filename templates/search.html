@@ -2,35 +2,32 @@
 {% load static %}
 {% block title %}Results{% endblock %}
 {% block content %}
+<div class="search_div">
+    <h1>{{result_len}}{{a}} search results showing for {{product}}</h1>
+</div>
+<div class="results">
+    
 <div class="results-div">
     <div class="product_results">
+        {% if search_string_length %}
+        {% for img,item,price,mrp,off in product_details_search %}
         <div class="card">
             <div class="content">
-                <img src="https://o.remove.bg/downloads/575f0cc6-fdba-4e20-82c5-60d27486f54e/1256.750_2x-removebg-preview.png" alt="img">
-                <h2>Fresh Mango</h2>
-                <p>&#8377 25</p>
-                <p>&#8377 20</p>
+                <img src="{{img}}" alt="img" id="product-img">
+                <h2>{{item}}</h2>
+                <div class="offer">
+                <p style="text-decoration: line-through">&#8377 {{mrp}}</p>
+                <p>{{off}} %</p>
+                </div>
+                <p id="price">&#8377 {{price}}</p>
                 <button>Buy Now</button>
             </div>
         </div>
-        <div class="card">
-            <div class="content">
-                <img src="https://o.remove.bg/downloads/575f0cc6-fdba-4e20-82c5-60d27486f54e/1256.750_2x-removebg-preview.png" alt="img">
-                <h2>Fresh Mango</h2>
-                <p>&#8377 25</p>
-                <p>&#8377 20</p>
-                <button>Buy Now</button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="content">
-                <img src="https://o.remove.bg/downloads/575f0cc6-fdba-4e20-82c5-60d27486f54e/1256.750_2x-removebg-preview.png" alt="img">
-                <h2>Fresh Mango</h2>
-                <p>&#8377 25</p>
-                <p>&#8377 20</p>
-                <button>Buy Now</button>
-            </div>
-        </div>
+        {% endfor %}
+        {% else %}
+        <p style="color:white">No results found</p>
+        {% endif %}
+    
     </div>
 </div>
 <style>
@@ -57,8 +54,8 @@
     }
     .card{
         position: relative;
-        width:280px;
-        height:400px;
+        width:80%;
+        height:100%;
         margin: 30px;
         box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
         border-radius:15px;
@@ -75,10 +72,12 @@
         padding: 20px;
         text-align: center;
         transition:0.5s;
+        padding:10px;
     }
     .content h2{
         color: white;
         font-weight:600;
+        font-size:20px;
     }
     .content p{
         color: white;
@@ -98,6 +97,14 @@
     }
     .content img{
         width:200px;
+    }
+    .offer{
+        display:flex;
+        justify-content:center;
+        gap: 30px;
+    }
+    #price{
+        font-size:24px;   
     }
 </style>
 <script type="text/javascript" src="{% static 'js/vanilla-tilt.js' %}"></script>

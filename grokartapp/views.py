@@ -31,11 +31,11 @@ def add_product(request):
         new_product.save()
         return HttpResponse("Product added successfully!")
     return render(request,'add_product.html',{username:request.user.username,email:request.user.email})
-def results(request):
-    return render(request,'product_view.html')
+
 def search(request):
+    print('abcd')
     product=request.GET['product']
-    print(product)
+    print(len(product))
     result=Product.objects.all().filter(product_name__icontains=product)
     result_len=len(result)
     if result_len==0:
@@ -54,4 +54,4 @@ def search(request):
         'search_string_length':search_string_length,
         'result_len':result_len,
         'product':product,}
-    return render(request,'product_view.html',pars)
+    return render(request,'search.html',pars)
