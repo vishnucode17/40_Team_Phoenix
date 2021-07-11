@@ -16,6 +16,7 @@
         </div>
         <div class="product_info">
             <h2 id="product-name">{{product_name}}</h2>
+            <p>{{available}} items left</p>
             <div class="price_div">
                 <p id="price">&#8377 {{price}}</p>
                 <p id="mrp">&#8377 {{mrp}}</span></p>
@@ -26,10 +27,17 @@
             <p><strong>Description:</strong></p>
             <p><strong>{{product_name}}</strong></p>
             <p>{{product_desc}}</p>
+            {% if isavailable %}
             <div class="buy">
-                <a href="/remove-from-cart/{{slug}}"><button id="buy">Buy Now</button></a>
+                <a href="/cart/{{slug}}"><button id="buy">Buy Now</button></a>
                 <a href="/cart/{{slug}}"><button id="add">Add to cart</button></a>
             </div>
+            {% else %}
+            <div class="buy">
+                <a href=""><button id="buy" disabled="disabled">Out of Stock</button></a>
+                
+            </div>
+            {% endif %}
             
         </div>
     </div>
@@ -99,6 +107,9 @@
         justify-content:space-around;
     }
     .buy button{
+        width: 100%;
+    }
+    .buy a{
         width: 100%;
     }
     #buy,#add{

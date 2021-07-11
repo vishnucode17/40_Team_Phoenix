@@ -52,4 +52,4 @@ def register(request):
 @login_required
 def logout(request):
     Logout(request)
-    return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(reverse('grokartapp:home'))

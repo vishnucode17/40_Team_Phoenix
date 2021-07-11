@@ -18,11 +18,12 @@
                 <i class="fas fa-lock"></i>
                 <input type="password" placeholder="Password" name="password">
             </div>
+            <a href="/accounts/reset_password">forgot password?</a>
             <div class="loginbutton">
                 <button class="btn btn-success">Login</button>
                 <br>
                 <br>
-                <a href="{% url 'register' %}">Don't have an account</a>
+                <a href="{% url 'accounts:register' %}">Don't have an account</a>
             </div>
         </form>
     </div>

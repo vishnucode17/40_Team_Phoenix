@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.conf import settings 
 from django.core.mail import send_mail 
+from accounts.models import Seller
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -75,6 +76,9 @@ def product_view(request,slug):
             'product_desc':product.product_description,
             'off':discount,
             'slug':product.slug,
+            'available':product.available,
+            'isavailable':product.isavailable,
+            'n_orders':product.n_orders,
         }
     except:
         print("Not found")
@@ -129,6 +133,7 @@ def remove_from_cart(request,slug):
         return redirect("/mycart",slug=slug)
     return redirect("/mycart",slug=slug)
 
+@login_required
 def cart(request):
         total_cart_price=0
         total_cart_discount=0
@@ -155,7 +160,8 @@ def cart(request):
         'total_mrp':total_mrp
         }
         return render(request,'cart.html',pars)
-    
+
+@login_required    
 def order_summary(request):
     if request.method == 'POST':
         address_one=request.POST['address_one']
@@ -166,19 +172,50 @@ def order_summary(request):
         address_five=request.POST['address_five']
         full_name=request.user.first_name + ' ' + request.user.last_name
         order_query=OrderItem.objects.filter(user=request.user,ordered=False)
+        order=Order.objects.filter(user=request.user,ordered=False)
+        print(order)
+        order=order[0]
+        order.ordered=True
+        order.save()
+        buyer_text=''
         for i in order_query:
             i.ordered = True
+            i.save()
             product_query=Product.objects.filter(product_name=i.item)
             product_query=product_query[0]
-            seller_mail=User.objects.get(username=product_query.storename)
-            buyer_subject = f'{i.item} Order Placed'
-            buyer_message = f'Hi {request.user.first_name} {request.user.last_name}, Thank you for shopping in GroKart. Order details:\n{i.item}\nprice: {product_query.price}\nquantity:{i.quantity}Have a great day'
-            seller_subject = f'New Order received {i.item}'
-            seller_message = f'Hi {request.user.username}, You got a new order. Order details:\n{i.item}\nprice: {product_query.price}\nHave a great day.Check the website for more details.Have a great day'
-            email_from = settings.EMAIL_HOST_USER 
-            recipient_list = [request.user.email, ] 
+            product_query.n_orders+=1
+            product_query.save()
+            product_query.available-=i.quantity
+            if product_query.available<0:
+                messages.info(request,"Stock Not available")
+            else:
+                product_query.save()
+                seller_mail=User.objects.get(username=product_query.storename)
+                
+                buyer_text += f'{i.item}\nprice: \u20B9 {product_query.price}\nquantity:{i.quantity}\nSold By: {product_query.storename}\n'
+                seller_subject = f'New Order received {i.item}'
+                seller_message = f'Hi {request.user.username}, You got a new order. Order details:\n{i.item}\nprice: {product_query.price}\nHave a great day.Check the website for more details.Have a great day'
+                email_from = settings.EMAIL_HOST_USER 
+                recipient_list = [request.user.email, ] 
+                send_mail(seller_subject,seller_message, email_from, [seller_mail.email])
+            buyer_subject = 'Order Placed'
+            buyer_message=f'Hi {request.user.first_name} {request.user.last_name}, Thank you for shopping in GroKart. Order details:\n'+buyer_text+'\nHave a great day'
             send_mail( buyer_subject, buyer_message, email_from, recipient_list ) 
-            send_mail(seller_subject,seller_message, email_from, [seller_mail.email])
-            return redirect('home')
+            return redirect('/thankyou')   
 
     return render(request,'order_summary.html')
+
+def sellerview(request):
+    sellerstatus=Seller.objects.filter(name=request.user)
+    if sellerstatus.is_seller:
+        if request.method == 'GET':
+            pass
+        else:
+            seller_result=()
+            orders=Product.objects.filter(storename=request.user)
+            for i in orders:
+                seller_result+=((prders.price),)
+
+@login_required
+def thankyou(request):
+    return render(request,'Thankyou.html')

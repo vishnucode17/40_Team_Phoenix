@@ -16,6 +16,8 @@ class Product(models.Model):
     product_image=models.ImageField(upload_to='product_images')
     n_orders=models.IntegerField(default=0)
     rating=models.IntegerField(default=0)
+    isavailable=models.BooleanField(default=True)
+    available=models.IntegerField(default=0)
     def __str__(self):
         return self.product_name
     def get_add_to_cart_url(self):

@@ -13,6 +13,7 @@ urlpatterns=[
     path('remove-from-cart/<slug:slug>',views.remove_from_cart,name='remove_from_cart'),
     path('mycart/',views.cart,name='cart'),
     path('order_summary/',views.order_summary,name='order_summary'),
+    path('thankyou',views.thankyou,name='thankyou')
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
