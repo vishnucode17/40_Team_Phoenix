@@ -114,7 +114,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'grokart.info@gmail.com'
-EMAIL_HOST_PASSWORD = 'grokart@123'
+EMAIL_HOST_PASSWORD = PASSWORD
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 

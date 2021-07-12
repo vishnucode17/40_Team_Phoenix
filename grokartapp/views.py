@@ -26,12 +26,13 @@ def add_product(request):
         mrp=request.POST.get('mrp')
         price=request.POST.get('price')
         slug=request.POST.get('slug')
+        stock=request.POST.get('stock')
         available=request.POST.get('pincodes')
         img_file = request.FILES['product_img']
         fs = FileSystemStorage()
         filename = fs.save(img_file.name,img_file)
         user = User.objects.get(username=request.user.username)
-        new_product=Product.objects.create(product_name=product_name,category=category,product_description=product_description,date_added=timezone.now(),mrp=mrp,price=price,product_image=img_file,storename=user,slug=slug)
+        new_product=Product.objects.create(product_name=product_name,category=category,product_description=product_description,date_added=timezone.now(),mrp=mrp,price=price,product_image=img_file,storename=user,slug=slug,available=stock)
         new_product.save()
         return HttpResponse("Product added successfully!")
     return render(request,'add_product.html',{username:request.user.username,email:request.user.email})
@@ -43,6 +44,7 @@ def search(request):
     result_len=len(result)
     if result_len==0:
         result=Product.objects.all().filter(category__icontains=product)
+        result=Product.objects.all().filter(store_name__icontains=product)
     result_len=len(result)
     search_string_length=len(result)>0
     product_details_search=[]
@@ -79,6 +81,8 @@ def product_view(request,slug):
             'available':product.available,
             'isavailable':product.isavailable,
             'n_orders':product.n_orders,
+            'stock':product.n_orders>0,
+            
         }
     except:
         print("Not found")
@@ -194,7 +198,7 @@ def order_summary(request):
                 
                 buyer_text += f'{i.item}\nprice: \u20B9 {product_query.price}\nquantity:{i.quantity}\nSold By: {product_query.storename}\n'
                 seller_subject = f'New Order received {i.item}'
-                seller_message = f'Hi {request.user.username}, You got a new order. Order details:\n{i.item}\nprice: {product_query.price}\nHave a great day.Check the website for more details.Have a great day'
+                seller_message = f'Hi {request.product_query.storename}, You got a new order. Order details:\n{i.item}\nprice: {product_query.price}\nHave a great day.Check the website for more details.Have a great day'
                 email_from = settings.EMAIL_HOST_USER 
                 recipient_list = [request.user.email, ] 
                 send_mail(seller_subject,seller_message, email_from, [seller_mail.email])
@@ -214,8 +218,12 @@ def sellerview(request):
             seller_result=()
             orders=Product.objects.filter(storename=request.user)
             for i in orders:
-                seller_result+=((prders.price),)
+                seller_result+=((orders.price),)
 
 @login_required
 def thankyou(request):
     return render(request,'Thankyou.html')
+
+@login_required
+def customer_support(request):
+    return render(request,'customer_support.html')

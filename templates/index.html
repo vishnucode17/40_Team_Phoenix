@@ -33,13 +33,13 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'grokartapp:about' %}">About</a>
+                        <a class="nav-link" href="/mycart" style="color:white"><i class="fas fa-shopping-cart fa-2x"></i></a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <i class="fas fa-user-circle fa-3x" style="color: #fff"></i>
+                        <a href="/accounts/myaccount"><i class="fas fa-user-circle fa-3x" style="color: #fff"></i></a>
                     </li>
-                    <p style="color: #fff;padding-left: 15px;">Welcome {{user.username}}</p>
+                    <p style="color: #fff;padding-left: 15px;right:0">Welcome {{user.username}}</p>
                     {% else %}
                     {% endif %}
                 </ul>
@@ -59,6 +59,97 @@
         crossorigin="anonymous"></script>
     {% block content %}
     {% endblock %}
+    {% block footer %}
+<footer class="text-center text-lg-start bg-light text-muted">
+    <section
+      class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+    >
+      <div class="me-5 d-none d-lg-block">
+        <span>Get connected with us on social networks:</span>
+      </div>
+      <div>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-google"></i>
+        </a>
+        <a href="" class="me-4 text-reset">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </section>
+  
+    <section class="">
+      <div class="container text-center text-md-start mt-5">
+        <div class="row mt-3">
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+        
+            <h6 class="text-uppercase fw-bold mb-4">
+              <img src="{% static 'images/favicon.png' %}" alt="" style="max-width:80px"> GroKart
+            </h6>
+            <p>
+              Here in Gro Kart we have tried our best to provide a good experience to all our customers and sellers , by providing all Groceries and other nutri goods under one platform with an easy accessing and handling feature .
+            </p>
+          </div>
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">
+              Products
+            </h6>
+            <p>
+              <a href="search/?product=fruits" class="text-reset">Fruits</a>
+            </p>
+            <p>
+              <a href="search/?product=vegetable" class="text-reset">Vegetables</a>
+            </p>
+            <p>
+              <a href="search/?product=dairy" class="text-reset">Dairy</a>
+            </p>
+            <p>
+              <a href="search/?product=snacks" class="text-reset">Snacks</a>
+            </p>
+          </div>
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            
+            <h6 class="text-uppercase fw-bold mb-4">
+              Navigate
+            </h6>
+            
+            <p>
+              <a href="/about" class="text-reset">About</a>
+            </p>
+            <p>
+              <a href="/account/myaccount" class="text-reset">Orders</a>
+            </p>
+            <p>
+              <a href="/customer_care" class="text-reset">Customer Support</a>
+            </p>
+        </div>
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">
+              Contact
+            </h6>
+            <p><i class="fas fa-home me-3"></i> Bangalore, India</p>
+            <p>
+              <i class="fas fa-envelope me-3"></i>
+              grokart.info.com
+            </p>
+            <p><i class="fas fa-phone me-3"></i> phoeneme</p>
+            <p><i class="fas fa-print me-3"></i>Phone</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+      © 2021 Copyright All rights reserved:
+      <a class="text-reset fw-bold" href="/">Grokart</a>
+    </div>
+  </footer>
+
+  {% endblock %}
 </body>
 
 </html>
